@@ -3,5 +3,8 @@ from django.http import HttpResponse
 
 
 # Home page
-def index(request):
-	return HttpResponse("Hello, world. You're at the list index.")
+def home(request):
+	return render(request, 'home.html')
+
+def list(request):
+	return render(request, 'list.html')
