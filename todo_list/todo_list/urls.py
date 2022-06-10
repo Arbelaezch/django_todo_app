@@ -4,11 +4,12 @@ from django.urls import path, include
 from django.contrib.auth.models import User
 
 from rest_framework import routers, serializers, viewsets
-from todo_list.lists import views
+from api import views
+import lists
 
 
 # Because we're using viewsets instead of views, we can automatically generate 
-# the URL conf for our API, by simply registering the viewsets with a router class. 
+# the URL conf for our API by simply registering the viewsets with a router class. 
 # Again, if we need more control over the API URLs we can simply drop down to using 
 # regular class-based views, and writing the URL conf explicitly.
 
@@ -21,7 +22,8 @@ router.register(r'groups', views.GroupViewSet)
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', include('lists.urls')),
+    path('data/', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
