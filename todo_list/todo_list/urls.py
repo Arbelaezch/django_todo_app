@@ -4,8 +4,9 @@ from django.urls import path, include
 from django.contrib.auth.models import User
 
 from rest_framework import routers, serializers, viewsets
+import base
 from api import views
-import lists
+# import lists
 
 
 # Because we're using viewsets instead of views, we can automatically generate 
@@ -22,8 +23,8 @@ router.register(r'groups', views.GroupViewSet)
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path('', include('lists.urls')),
-    path('data/', include(router.urls)),
+    path('', include('base.urls')),
+    path('api/', include('api.urls')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

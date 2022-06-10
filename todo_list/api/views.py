@@ -3,15 +3,29 @@ from rest_framework.decorators import api_view
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
+from yaml import serialize
+import rest_framework.permissions
 
 from api.serializers import UserSerializer, GroupSerializer
+from .serializers import ItemSerializer
+from base.models import Item
 
 
 @api_view(['GET'])
+# @permission_classes((permissions.AllowAny,))
 def getData(request):
-    person = {'name': 'Carb', 'age':25}
+    items = Item.objects.all()
+    serializer = ItemSerializer(items, many=True)
     # Returns as JSON data
-    return Response(person)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def addItem(request):
+    serializer = ItemSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    # Returns as JSON data
+    return Response(serializer.data)
 
 
 # ViewSets define the view behavior.
